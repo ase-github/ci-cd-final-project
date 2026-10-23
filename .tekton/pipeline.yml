@@ -30,18 +30,12 @@ spec:
       runAfter:
         - cleanup
       taskRef:
-        resolver: cluster
-        params:
-          - name: kind
-            value: task
-          - name: name
-            value: git-clone
-          - name: namespace
-            value: openshift-pipelines
+        name: git-clone
+        kind: ClusterTask
       params:
-        - name: URL
+        - name: url
           value: $(params.repo-url)
-        - name: REVISION
+        - name: revision
           value: $(params.branch)
       workspaces:
         - name: output
@@ -83,14 +77,8 @@ spec:
       runAfter:
         - nose
       taskRef:
-        resolver: cluster
-        params:
-          - name: kind
-            value: task
-          - name: name
-            value: buildah
-          - name: namespace
-            value: openshift-pipelines
+        name: buildah
+        kind: ClusterTask
       params:
         - name: IMAGE
           value: $(params.build-image)
@@ -102,14 +90,8 @@ spec:
       runAfter:
         - buildah
       taskRef:
-        resolver: cluster
-        params:
-          - name: kind
-            value: task
-          - name: name
-            value: openshift-client
-          - name: namespace
-            value: openshift-pipelines
+        name: openshift-client
+        kind: ClusterTask
       params:
         - name: SCRIPT
           value: |
